@@ -15,6 +15,7 @@ RUN apk add --no-cache \
     libxml2-dev \
     libxslt-dev \
     libzip-dev \
+    linux-headers \
     oniguruma-dev \
     shadow \
     wget \
