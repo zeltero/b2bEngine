@@ -1,0 +1,70 @@
+# Docker ignore file for B2B Engine
+
+# Git
+.git
+.gitignore
+.github
+
+# Documentation
+*.md
+!README_DOCKER.md
+CHANGELOG.md
+LICENSE*.txt
+COPYING.txt
+
+# IDE
+.idea
+.vscode
+*.swp
+*.swo
+*~
+
+# Composer
+/vendor/
+composer.lock
+
+# Magento generated files
+/generated/*
+/var/*
+/pub/static/*
+!/pub/static/.htaccess
+/pub/media/*
+!/pub/media/.htaccess
+/app/etc/env.php
+/app/etc/config.php
+
+# Development files
+/dev/tests/
+/dev/tools/
+
+# Node
+node_modules/
+npm-debug.log
+yarn-error.log
+package-lock.json
+
+# Docker files (don't copy to image)
+docker-compose*.yml
+.dockerignore
+
+# Environment files
+.env
+.env.local
+.env.*.local
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Temporary files
+tmp/
+temp/
+*.tmp

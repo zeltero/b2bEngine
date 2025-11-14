@@ -56,7 +56,21 @@ This repository contains a fully-featured B2B e-commerce platform built on Magen
 
 ## Installation
 
-### Prerequisites
+### 🐳 Docker Installation (Recommended for Production)
+
+**Quick Setup with Docker:**
+```bash
+./setup-docker.sh
+```
+
+For complete Docker setup with password protection, see:
+- **Quick Guide:** [DOCKER_QUICKSTART.md](DOCKER_QUICKSTART.md)
+- **Full Documentation:** [README_DOCKER.md](README_DOCKER.md)
+- **Deployment Checklist:** [DEPLOYMENT_CHECKLIST.md](DEPLOYMENT_CHECKLIST.md)
+
+### Manual Installation
+
+#### Prerequisites
 
 - PHP 8.2, 8.3, or 8.4
 - MySQL 8.0+ or MariaDB 10.4+
@@ -64,7 +78,7 @@ This repository contains a fully-featured B2B e-commerce platform built on Magen
 - Composer 2.x
 - Web server (Apache or Nginx)
 
-### Quick Start
+#### Quick Start
 
 1. **Clone the repository**
    ```bash
