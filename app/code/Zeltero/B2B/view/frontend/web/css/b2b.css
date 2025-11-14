@@ -1,0 +1,326 @@
+/**
+ * Zeltero B2B Module Styles
+ */
+
+/* Company Registration Form */
+.company-registration {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.company-registration h1 {
+    margin-bottom: 30px;
+    font-size: 28px;
+    color: #333;
+}
+
+.company-registration .fieldset {
+    margin-bottom: 30px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.company-registration .fieldset .legend {
+    font-size: 20px;
+    font-weight: 600;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+.company-registration .field {
+    margin-bottom: 20px;
+}
+
+.company-registration .field.required .label:after {
+    content: '*';
+    color: #e02b27;
+    margin-left: 5px;
+}
+
+.company-registration .label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+}
+
+.company-registration .control {
+    position: relative;
+}
+
+.company-registration .input-text,
+.company-registration textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+    transition: border-color 0.3s;
+}
+
+.company-registration .input-text:focus,
+.company-registration textarea:focus {
+    border-color: #1979c3;
+    outline: none;
+}
+
+.company-registration textarea {
+    min-height: 100px;
+    resize: vertical;
+}
+
+.company-registration .actions-toolbar {
+    margin-top: 30px;
+    text-align: right;
+}
+
+.company-registration .action.submit.primary {
+    background: #1979c3;
+    color: #fff;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.company-registration .action.submit.primary:hover {
+    background: #006bb4;
+}
+
+/* Quick Order Form */
+.quick-order {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.quick-order h1 {
+    margin-bottom: 20px;
+    font-size: 28px;
+    color: #333;
+}
+
+.quick-order-description {
+    margin-bottom: 30px;
+    padding: 15px;
+    background: #f0f8ff;
+    border-left: 4px solid #1979c3;
+    border-radius: 4px;
+}
+
+.quick-order-items {
+    margin-bottom: 20px;
+}
+
+.quick-order-item {
+    display: flex;
+    gap: 15px;
+    margin-bottom: 15px;
+    padding: 15px;
+    background: #f9f9f9;
+    border-radius: 4px;
+    align-items: flex-end;
+}
+
+.quick-order-item .field {
+    flex: 1;
+    margin-bottom: 0;
+}
+
+.quick-order-item .field.sku {
+    flex: 2;
+}
+
+.quick-order-item .field.qty {
+    flex: 0 0 120px;
+}
+
+.quick-order-item .label {
+    display: block;
+    margin-bottom: 5px;
+    font-weight: 600;
+    color: #555;
+    font-size: 14px;
+}
+
+.quick-order-item .input-text {
+    width: 100%;
+    padding: 8px 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 14px;
+}
+
+.quick-order-item .action.remove {
+    background: #dc3545;
+    color: #fff;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 4px;
+    cursor: pointer;
+    flex: 0 0 auto;
+    transition: background-color 0.3s;
+}
+
+.quick-order-item .action.remove:hover {
+    background: #c82333;
+}
+
+.quick-order-actions {
+    display: flex;
+    gap: 15px;
+    margin-top: 20px;
+    padding: 20px;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.quick-order-actions .action {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+.quick-order-actions .action.add {
+    background: #28a745;
+    color: #fff;
+}
+
+.quick-order-actions .action.add:hover {
+    background: #218838;
+}
+
+.quick-order-actions .action.primary {
+    background: #1979c3;
+    color: #fff;
+}
+
+.quick-order-actions .action.primary:hover {
+    background: #006bb4;
+}
+
+.quick-order-csv {
+    margin-top: 30px;
+    padding: 25px;
+    background: #fff3cd;
+    border: 1px solid #ffc107;
+    border-radius: 4px;
+}
+
+.quick-order-csv h3 {
+    margin-top: 0;
+    margin-bottom: 10px;
+    font-size: 20px;
+    color: #333;
+}
+
+.quick-order-csv p {
+    margin-bottom: 15px;
+    color: #666;
+}
+
+.quick-order-csv .action {
+    background: #ffc107;
+    color: #000;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.quick-order-csv .action:hover {
+    background: #e0a800;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .quick-order-item {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    
+    .quick-order-item .field {
+        flex: 1 1 auto;
+    }
+    
+    .quick-order-item .field.sku,
+    .quick-order-item .field.qty {
+        flex: 1 1 auto;
+    }
+    
+    .quick-order-actions {
+        flex-direction: column;
+    }
+    
+    .company-registration {
+        padding: 10px;
+    }
+}
+
+/* Loading Overlay */
+.loading-mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loading-mask .loader {
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #1979c3;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Messages */
+.message {
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+}
+
+.message.success {
+    background: #d4edda;
+    color: #155724;
+    border: 1px solid #c3e6cb;
+}
+
+.message.error {
+    background: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+}
+
+.message.warning {
+    background: #fff3cd;
+    color: #856404;
+    border: 1px solid #ffeaa7;
+}
+
+.message.info {
+    background: #d1ecf1;
+    color: #0c5460;
+    border: 1px solid #bee5eb;
+}
