@@ -22,24 +22,18 @@ RUN apk add --no-cache \
     unzip
 
 # Install PHP extensions required by Magento
+# Note: ctype, dom, hash, iconv, mbstring, simplexml, and sodium are built-in to PHP 8.3
+# curl is not a PHP extension (it's a system library)
 RUN docker-php-ext-configure gd --with-freetype --with-jpeg \
     && docker-php-ext-install -j$(nproc) \
         bcmath \
-        ctype \
-        curl \
-        dom \
         gd \
-        hash \
-        iconv \
         intl \
-        mbstring \
         mysqli \
         opcache \
         pdo_mysql \
-        simplexml \
         soap \
         sockets \
-        sodium \
         xsl \
         zip
 
