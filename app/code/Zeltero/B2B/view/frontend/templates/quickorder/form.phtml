@@ -1,0 +1,250 @@
+<?php
+/**
+ * Quick Order Template
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+?>
+<div class="quick-order">
+    <h1><?= __('Quick Order') ?></h1>
+    
+    <div class="quick-order-description">
+        <p><?= __('Enter SKU and quantity to quickly add products to your cart.') ?></p>
+    </div>
+    
+    <div class="quick-order-form">
+        <div class="quick-order-items" id="quick-order-items">
+            <div class="quick-order-item" data-index="0">
+                <div class="field sku">
+                    <label for="sku_0" class="label">
+                        <span><?= __('SKU') ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="text" 
+                               name="items[0][sku]" 
+                               id="sku_0" 
+                               class="input-text quick-order-sku" 
+                               placeholder="<?= __('Enter SKU') ?>"/>
+                    </div>
+                </div>
+                
+                <div class="field qty">
+                    <label for="qty_0" class="label">
+                        <span><?= __('Qty') ?></span>
+                    </label>
+                    <div class="control">
+                        <input type="number" 
+                               name="items[0][qty]" 
+                               id="qty_0" 
+                               class="input-text quick-order-qty" 
+                               value="1" 
+                               min="1"/>
+                    </div>
+                </div>
+                
+                <button type="button" 
+                        class="action remove" 
+                        onclick="removeQuickOrderItem(0)">
+                    <span><?= __('Remove') ?></span>
+                </button>
+            </div>
+        </div>
+        
+        <div class="quick-order-actions">
+            <button type="button" 
+                    class="action add" 
+                    id="add-quick-order-row">
+                <span><?= __('Add Another Row') ?></span>
+            </button>
+            
+            <button type="button" 
+                    class="action primary submit" 
+                    id="add-to-cart-quick-order">
+                <span><?= __('Add to Cart') ?></span>
+            </button>
+        </div>
+        
+        <div class="quick-order-csv">
+            <h3><?= __('Or Import from CSV') ?></h3>
+            <p><?= __('Upload a CSV file with columns: SKU, Quantity') ?></p>
+            <input type="file" 
+                   id="csv-upload" 
+                   accept=".csv" 
+                   style="display:none;"/>
+            <button type="button" 
+                    class="action" 
+                    onclick="document.getElementById('csv-upload').click()">
+                <span><?= __('Upload CSV') ?></span>
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+require([
+    'jquery',
+    'Magento_Ui/js/modal/alert',
+    'mage/url'
+], function($, alert, urlBuilder) {
+    var itemIndex = 1;
+    
+    // Add new row
+    $('#add-quick-order-row').on('click', function() {
+        var html = '<div class="quick-order-item" data-index="' + itemIndex + '">' +
+            '<div class="field sku">' +
+            '<label for="sku_' + itemIndex + '" class="label"><span><?= __('SKU') ?></span></label>' +
+            '<div class="control">' +
+            '<input type="text" name="items[' + itemIndex + '][sku]" id="sku_' + itemIndex + '" ' +
+            'class="input-text quick-order-sku" placeholder="<?= __('Enter SKU') ?>"/>' +
+            '</div></div>' +
+            '<div class="field qty">' +
+            '<label for="qty_' + itemIndex + '" class="label"><span><?= __('Qty') ?></span></label>' +
+            '<div class="control">' +
+            '<input type="number" name="items[' + itemIndex + '][qty]" id="qty_' + itemIndex + '" ' +
+            'class="input-text quick-order-qty" value="1" min="1"/>' +
+            '</div></div>' +
+            '<button type="button" class="action remove" onclick="removeQuickOrderItem(' + itemIndex + ')">' +
+            '<span><?= __('Remove') ?></span></button>' +
+            '</div>';
+        
+        $('#quick-order-items').append(html);
+        itemIndex++;
+    });
+    
+    // Remove item
+    window.removeQuickOrderItem = function(index) {
+        $('[data-index="' + index + '"]').remove();
+    };
+    
+    // Add to cart
+    $('#add-to-cart-quick-order').on('click', function() {
+        var items = [];
+        $('.quick-order-item').each(function() {
+            var sku = $(this).find('.quick-order-sku').val();
+            var qty = $(this).find('.quick-order-qty').val();
+            
+            if (sku) {
+                items.push({
+                    sku: sku,
+                    qty: qty
+                });
+            }
+        });
+        
+        if (items.length === 0) {
+            alert({
+                content: '<?= __('Please enter at least one SKU.') ?>'
+            });
+            return;
+        }
+        
+        $.ajax({
+            url: urlBuilder.build('b2b/quickorder/addtocart'),
+            type: 'POST',
+            data: {
+                items: items,
+                form_key: $.mage.cookies.get('form_key')
+            },
+            dataType: 'json',
+            showLoader: true,
+            success: function(response) {
+                alert({
+                    content: response.message,
+                    actions: {
+                        always: function() {
+                            if (response.success) {
+                                window.location.href = urlBuilder.build('checkout/cart');
+                            }
+                        }
+                    }
+                });
+            },
+            error: function() {
+                alert({
+                    content: '<?= __('An error occurred. Please try again.') ?>'
+                });
+            }
+        });
+    });
+    
+    // CSV upload
+    $('#csv-upload').on('change', function(e) {
+        var file = e.target.files[0];
+        if (!file) return;
+        
+        var reader = new FileReader();
+        reader.onload = function(event) {
+            var csv = event.target.result;
+            var lines = csv.split('\n');
+            
+            $('#quick-order-items').empty();
+            itemIndex = 0;
+            
+            for (var i = 1; i < lines.length; i++) {
+                var line = lines[i].trim();
+                if (!line) continue;
+                
+                var parts = line.split(',');
+                if (parts.length >= 2) {
+                    var sku = parts[0].trim();
+                    var qty = parseInt(parts[1].trim()) || 1;
+                    
+                    var html = '<div class="quick-order-item" data-index="' + itemIndex + '">' +
+                        '<div class="field sku">' +
+                        '<label for="sku_' + itemIndex + '" class="label"><span><?= __('SKU') ?></span></label>' +
+                        '<div class="control">' +
+                        '<input type="text" name="items[' + itemIndex + '][sku]" id="sku_' + itemIndex + '" ' +
+                        'class="input-text quick-order-sku" value="' + sku + '"/>' +
+                        '</div></div>' +
+                        '<div class="field qty">' +
+                        '<label for="qty_' + itemIndex + '" class="label"><span><?= __('Qty') ?></span></label>' +
+                        '<div class="control">' +
+                        '<input type="number" name="items[' + itemIndex + '][qty]" id="qty_' + itemIndex + '" ' +
+                        'class="input-text quick-order-qty" value="' + qty + '" min="1"/>' +
+                        '</div></div>' +
+                        '<button type="button" class="action remove" onclick="removeQuickOrderItem(' + itemIndex + ')">' +
+                        '<span><?= __('Remove') ?></span></button>' +
+                        '</div>';
+                    
+                    $('#quick-order-items').append(html);
+                    itemIndex++;
+                }
+            }
+            
+            alert({
+                content: '<?= __('CSV imported successfully.') ?>'
+            });
+        };
+        reader.readAsText(file);
+    });
+});
+</script>
+
+<style>
+.quick-order-item {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 10px;
+    align-items: flex-end;
+}
+
+.quick-order-item .field {
+    flex: 1;
+}
+
+.quick-order-item .field.sku {
+    flex: 2;
+}
+
+.quick-order-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+.quick-order-csv {
+    margin-top: 30px;
+    padding: 20px;
+    background: #f5f5f5;
+    border-radius: 4px;
+}
+</style>

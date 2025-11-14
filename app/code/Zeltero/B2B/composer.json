@@ -1,0 +1,33 @@
+{
+    "name": "zeltero/module-b2b",
+    "description": "B2B e-commerce module for Magento Open Source with company registration, quick order, wholesale pricing, and ERP integration",
+    "type": "magento2-module",
+    "version": "1.0.0",
+    "license": "OSL-3.0",
+    "authors": [
+        {
+            "name": "Zeltero",
+            "email": "info@zeltero.com"
+        }
+    ],
+    "require": {
+        "php": "~8.2.0||~8.3.0||~8.4.0",
+        "magento/framework": "*",
+        "magento/module-backend": "*",
+        "magento/module-catalog": "*",
+        "magento/module-checkout": "*",
+        "magento/module-customer": "*",
+        "magento/module-payment": "*",
+        "magento/module-quote": "*",
+        "magento/module-sales": "*",
+        "magento/module-store": "*"
+    },
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Zeltero\\B2B\\": ""
+        }
+    }
+}

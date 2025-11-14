@@ -1,0 +1,83 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Payment Methods Configuration
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <virtualType name="ZelteroBankTransferFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Zeltero\B2B\Model\Payment\BankTransfer::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info\Instructions</argument>
+            <argument name="valueHandlerPool" xsi:type="object">ZelteroBankTransferValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">ZelteroBankTransferCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroProformaFacade" type="Magento\Payment\Model\Method\Adapter">
+        <arguments>
+            <argument name="code" xsi:type="const">Zeltero\B2B\Model\Payment\Proforma::CODE</argument>
+            <argument name="formBlockType" xsi:type="string">Magento\Payment\Block\Form</argument>
+            <argument name="infoBlockType" xsi:type="string">Magento\Payment\Block\Info\Instructions</argument>
+            <argument name="valueHandlerPool" xsi:type="object">ZelteroProformaValueHandlerPool</argument>
+            <argument name="commandPool" xsi:type="object">ZelteroProformaCommandPool</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroBankTransferValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ZelteroBankTransferConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroProformaValueHandlerPool" type="Magento\Payment\Gateway\Config\ValueHandlerPool">
+        <arguments>
+            <argument name="handlers" xsi:type="array">
+                <item name="default" xsi:type="string">ZelteroProformaConfigValueHandler</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroBankTransferConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ZelteroBankTransferConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroProformaConfigValueHandler" type="Magento\Payment\Gateway\Config\ConfigValueHandler">
+        <arguments>
+            <argument name="configInterface" xsi:type="object">ZelteroProformaConfig</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroBankTransferConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Zeltero\B2B\Model\Payment\BankTransfer::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroProformaConfig" type="Magento\Payment\Gateway\Config\Config">
+        <arguments>
+            <argument name="methodCode" xsi:type="const">Zeltero\B2B\Model\Payment\Proforma::CODE</argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroBankTransferCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Magento\Payment\Gateway\Command\NullCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="ZelteroProformaCommandPool" type="Magento\Payment\Gateway\Command\CommandPool">
+        <arguments>
+            <argument name="commands" xsi:type="array">
+                <item name="initialize" xsi:type="string">Magento\Payment\Gateway\Command\NullCommand</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

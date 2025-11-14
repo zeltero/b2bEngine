@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Default Configuration Values
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <!-- B2B General Settings -->
+        <zeltero_b2b>
+            <company>
+                <enabled>1</enabled>
+                <auto_approve>0</auto_approve>
+            </company>
+            <quick_order>
+                <enabled>1</enabled>
+                <allow_csv_import>1</allow_csv_import>
+                <max_items>100</max_items>
+            </quick_order>
+            <payment>
+                <enable_bank_transfer>1</enable_bank_transfer>
+                <enable_proforma>1</enable_proforma>
+            </payment>
+            <erp>
+                <enabled>0</enabled>
+                <export_format>csv</export_format>
+                <export_path>b2b/erp/export</export_path>
+            </erp>
+            <wholesale>
+                <enabled>1</enabled>
+                <show_retail_price>1</show_retail_price>
+            </wholesale>
+        </zeltero_b2b>
+        
+        <!-- Payment Methods -->
+        <payment>
+            <zeltero_banktransfer>
+                <active>1</active>
+                <model>Zeltero\B2B\Model\Payment\BankTransfer</model>
+                <order_status>pending</order_status>
+                <title>Bank Transfer</title>
+                <allowspecific>0</allowspecific>
+                <sort_order>10</sort_order>
+                <instructions>Please transfer payment to our bank account. Order will be processed after payment confirmation.</instructions>
+            </zeltero_banktransfer>
+            <zeltero_proforma>
+                <active>1</active>
+                <model>Zeltero\B2B\Model\Payment\Proforma</model>
+                <order_status>pending</order_status>
+                <title>Proforma Invoice</title>
+                <allowspecific>0</allowspecific>
+                <sort_order>20</sort_order>
+                <instructions>A proforma invoice will be sent to you. Payment must be received before shipment.</instructions>
+            </zeltero_proforma>
+        </payment>
+    </default>
+</config>

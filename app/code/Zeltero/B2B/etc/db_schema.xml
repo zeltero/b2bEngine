@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Database Schema for B2B Module
+ * Creates tables for company registration and management
+ */
+-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    
+    <!-- Company Table -->
+    <table name="zeltero_b2b_company" resource="default" engine="innodb" comment="B2B Company Information">
+        <column xsi:type="int" name="company_id" unsigned="true" nullable="false" identity="true" comment="Company ID"/>
+        <column xsi:type="varchar" name="company_name" nullable="false" length="255" comment="Company Name"/>
+        <column xsi:type="varchar" name="tax_id" nullable="true" length="50" comment="Tax/VAT ID"/>
+        <column xsi:type="varchar" name="email" nullable="false" length="255" comment="Company Email"/>
+        <column xsi:type="varchar" name="phone" nullable="true" length="50" comment="Company Phone"/>
+        <column xsi:type="text" name="address" nullable="true" comment="Company Address"/>
+        <column xsi:type="varchar" name="city" nullable="true" length="100" comment="City"/>
+        <column xsi:type="varchar" name="country" nullable="true" length="2" comment="Country Code"/>
+        <column xsi:type="varchar" name="postal_code" nullable="true" length="20" comment="Postal Code"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="20" default="pending" comment="Approval Status (pending, approved, rejected)"/>
+        <column xsi:type="int" name="customer_group_id" unsigned="true" nullable="true" comment="Customer Group ID"/>
+        <column xsi:type="decimal" name="credit_limit" scale="4" precision="20" nullable="true" comment="Credit Limit"/>
+        <column xsi:type="int" name="payment_term_days" unsigned="true" nullable="true" default="0" comment="Payment Term in Days"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="company_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ZELTERO_B2B_COMPANY_EMAIL">
+            <column name="email"/>
+        </constraint>
+        <index referenceId="ZELTERO_B2B_COMPANY_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+        <index referenceId="ZELTERO_B2B_COMPANY_CUSTOMER_GROUP" indexType="btree">
+            <column name="customer_group_id"/>
+        </index>
+    </table>
+
+    <!-- Company Users Table -->
+    <table name="zeltero_b2b_company_user" resource="default" engine="innodb" comment="B2B Company Users">
+        <column xsi:type="int" name="user_id" unsigned="true" nullable="false" identity="true" comment="User ID"/>
+        <column xsi:type="int" name="company_id" unsigned="true" nullable="false" comment="Company ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="varchar" name="role" nullable="false" length="50" default="user" comment="User Role (admin, purchaser, user)"/>
+        <column xsi:type="smallint" name="is_active" unsigned="true" nullable="false" default="1" comment="Is Active"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="user_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="ZELTERO_B2B_COMPANY_USER_COMPANY_ID" 
+                    table="zeltero_b2b_company_user" column="company_id" 
+                    referenceTable="zeltero_b2b_company" referenceColumn="company_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="ZELTERO_B2B_COMPANY_USER_CUSTOMER_ID" 
+                    table="zeltero_b2b_company_user" column="customer_id" 
+                    referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="unique" referenceId="ZELTERO_B2B_COMPANY_USER_CUSTOMER_ID">
+            <column name="customer_id"/>
+        </constraint>
+        <index referenceId="ZELTERO_B2B_COMPANY_USER_COMPANY_ID" indexType="btree">
+            <column name="company_id"/>
+        </index>
+    </table>
+
+    <!-- Quick Order History Table -->
+    <table name="zeltero_b2b_quick_order" resource="default" engine="innodb" comment="B2B Quick Order History">
+        <column xsi:type="int" name="quick_order_id" unsigned="true" nullable="false" identity="true" comment="Quick Order ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="text" name="items_data" nullable="false" comment="Order Items JSON Data"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="20" default="draft" comment="Status"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="quick_order_id"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="ZELTERO_B2B_QUICK_ORDER_CUSTOMER_ID" 
+                    table="zeltero_b2b_quick_order" column="customer_id" 
+                    referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <index referenceId="ZELTERO_B2B_QUICK_ORDER_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+    </table>
+
+    <!-- RFQ Table (Phase 2) -->
+    <table name="zeltero_b2b_rfq" resource="default" engine="innodb" comment="B2B Request for Quote">
+        <column xsi:type="int" name="rfq_id" unsigned="true" nullable="false" identity="true" comment="RFQ ID"/>
+        <column xsi:type="int" name="customer_id" unsigned="true" nullable="false" comment="Customer ID"/>
+        <column xsi:type="int" name="company_id" unsigned="true" nullable="true" comment="Company ID"/>
+        <column xsi:type="varchar" name="reference_number" nullable="false" length="50" comment="RFQ Reference Number"/>
+        <column xsi:type="text" name="items_data" nullable="false" comment="RFQ Items JSON Data"/>
+        <column xsi:type="varchar" name="status" nullable="false" length="20" default="pending" comment="Status (pending, quoted, approved, rejected)"/>
+        <column xsi:type="text" name="notes" nullable="true" comment="Customer Notes"/>
+        <column xsi:type="text" name="admin_notes" nullable="true" comment="Admin Notes"/>
+        <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created At"/>
+        <column xsi:type="timestamp" name="updated_at" on_update="true" nullable="false" default="CURRENT_TIMESTAMP" comment="Updated At"/>
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="rfq_id"/>
+        </constraint>
+        <constraint xsi:type="unique" referenceId="ZELTERO_B2B_RFQ_REFERENCE_NUMBER">
+            <column name="reference_number"/>
+        </constraint>
+        <constraint xsi:type="foreign" referenceId="ZELTERO_B2B_RFQ_CUSTOMER_ID" 
+                    table="zeltero_b2b_rfq" column="customer_id" 
+                    referenceTable="customer_entity" referenceColumn="entity_id" onDelete="CASCADE"/>
+        <constraint xsi:type="foreign" referenceId="ZELTERO_B2B_RFQ_COMPANY_ID" 
+                    table="zeltero_b2b_rfq" column="company_id" 
+                    referenceTable="zeltero_b2b_company" referenceColumn="company_id" onDelete="SET NULL"/>
+        <index referenceId="ZELTERO_B2B_RFQ_CUSTOMER_ID" indexType="btree">
+            <column name="customer_id"/>
+        </index>
+        <index referenceId="ZELTERO_B2B_RFQ_STATUS" indexType="btree">
+            <column name="status"/>
+        </index>
+    </table>
+
+</schema>
