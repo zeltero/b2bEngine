@@ -1,0 +1,113 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Admin Configuration for B2B Module
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="zeltero_b2b" translate="label" sortOrder="400">
+            <label>Zeltero B2B</label>
+        </tab>
+        
+        <section id="zeltero_b2b_general" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>General Settings</label>
+            <tab>zeltero_b2b</tab>
+            <resource>Zeltero_B2B::config</resource>
+            
+            <group id="company" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Company Registration</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Company Registration</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/company/enabled</config_path>
+                </field>
+                <field id="auto_approve" translate="label comment" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Auto Approve Companies</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/company/auto_approve</config_path>
+                    <comment>Automatically approve company registrations without manual review</comment>
+                </field>
+                <field id="default_customer_group" translate="label comment" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Default Customer Group</label>
+                    <source_model>Magento\Customer\Model\Config\Source\Group</source_model>
+                    <config_path>zeltero_b2b/company/default_customer_group</config_path>
+                    <comment>Default customer group for approved companies</comment>
+                </field>
+            </group>
+            
+            <group id="quick_order" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Quick Order</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Quick Order</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/quick_order/enabled</config_path>
+                </field>
+                <field id="allow_csv_import" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Allow CSV Import</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/quick_order/allow_csv_import</config_path>
+                </field>
+                <field id="max_items" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Maximum Items per Quick Order</label>
+                    <validate>validate-number validate-greater-than-zero</validate>
+                    <config_path>zeltero_b2b/quick_order/max_items</config_path>
+                    <comment>Maximum number of items that can be added in one quick order</comment>
+                </field>
+            </group>
+            
+            <group id="payment" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>B2B Payment Methods</label>
+                <field id="enable_bank_transfer" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Bank Transfer</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/payment/enable_bank_transfer</config_path>
+                </field>
+                <field id="enable_proforma" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Proforma Invoice</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/payment/enable_proforma</config_path>
+                </field>
+            </group>
+            
+            <group id="erp" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>ERP Integration</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable ERP Export</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/erp/enabled</config_path>
+                </field>
+                <field id="export_format" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Export Format</label>
+                    <source_model>Zeltero\B2B\Model\Config\Source\ExportFormat</source_model>
+                    <config_path>zeltero_b2b/erp/export_format</config_path>
+                </field>
+                <field id="export_path" translate="label comment" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Export Directory Path</label>
+                    <config_path>zeltero_b2b/erp/export_path</config_path>
+                    <comment>Directory path for ERP export files (relative to Magento var directory)</comment>
+                </field>
+            </group>
+        </section>
+        
+        <section id="zeltero_b2b_pricing" translate="label" type="text" sortOrder="200" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Pricing Settings</label>
+            <tab>zeltero_b2b</tab>
+            <resource>Zeltero_B2B::config</resource>
+            
+            <group id="wholesale" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Wholesale Pricing</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Wholesale Pricing</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/wholesale/enabled</config_path>
+                </field>
+                <field id="show_retail_price" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Retail Price</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <config_path>zeltero_b2b/wholesale/show_retail_price</config_path>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

@@ -1,0 +1,122 @@
+<?php
+/**
+ * Company Registration Template
+ * @var $block \Magento\Framework\View\Element\Template
+ */
+?>
+<div class="company-registration">
+    <h1><?= __('Company Registration') ?></h1>
+    
+    <form action="<?= $block->escapeUrl($block->getUrl('b2b/company/register')) ?>" 
+          method="post" 
+          id="company-registration-form" 
+          class="form company-registration-form"
+          data-mage-init='{"validation":{}}'>
+        
+        <fieldset class="fieldset">
+            <legend class="legend"><span><?= __('Company Information') ?></span></legend>
+            
+            <div class="field company-name required">
+                <label for="company_name" class="label">
+                    <span><?= __('Company Name') ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" 
+                           name="company_name" 
+                           id="company_name" 
+                           title="<?= __('Company Name') ?>" 
+                           class="input-text" 
+                           data-validate="{required:true}"/>
+                </div>
+            </div>
+            
+            <div class="field tax-id">
+                <label for="tax_id" class="label">
+                    <span><?= __('Tax/VAT ID') ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" 
+                           name="tax_id" 
+                           id="tax_id" 
+                           title="<?= __('Tax/VAT ID') ?>" 
+                           class="input-text"/>
+                </div>
+            </div>
+            
+            <div class="field email required">
+                <label for="email" class="label">
+                    <span><?= __('Company Email') ?></span>
+                </label>
+                <div class="control">
+                    <input type="email" 
+                           name="email" 
+                           id="email" 
+                           title="<?= __('Company Email') ?>" 
+                           class="input-text" 
+                           data-validate="{required:true, 'validate-email':true}"/>
+                </div>
+            </div>
+            
+            <div class="field phone">
+                <label for="phone" class="label">
+                    <span><?= __('Phone') ?></span>
+                </label>
+                <div class="control">
+                    <input type="tel" 
+                           name="phone" 
+                           id="phone" 
+                           title="<?= __('Phone') ?>" 
+                           class="input-text"/>
+                </div>
+            </div>
+            
+            <div class="field address">
+                <label for="address" class="label">
+                    <span><?= __('Address') ?></span>
+                </label>
+                <div class="control">
+                    <textarea name="address" 
+                              id="address" 
+                              title="<?= __('Address') ?>" 
+                              class="input-text"></textarea>
+                </div>
+            </div>
+            
+            <div class="field city">
+                <label for="city" class="label">
+                    <span><?= __('City') ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" 
+                           name="city" 
+                           id="city" 
+                           title="<?= __('City') ?>" 
+                           class="input-text"/>
+                </div>
+            </div>
+            
+            <div class="field postal-code">
+                <label for="postal_code" class="label">
+                    <span><?= __('Postal Code') ?></span>
+                </label>
+                <div class="control">
+                    <input type="text" 
+                           name="postal_code" 
+                           id="postal_code" 
+                           title="<?= __('Postal Code') ?>" 
+                           class="input-text"/>
+                </div>
+            </div>
+        </fieldset>
+        
+        <div class="actions-toolbar">
+            <div class="primary">
+                <button type="submit" class="action submit primary">
+                    <span><?= __('Submit Registration') ?></span>
+                </button>
+            </div>
+        </div>
+        
+        <?= $block->getBlockHtml('formkey') ?>
+    </form>
+</div>

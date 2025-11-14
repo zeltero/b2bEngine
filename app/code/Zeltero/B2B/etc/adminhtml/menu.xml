@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Admin Menu Configuration
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Zeltero_B2B::b2b" title="B2B" module="Zeltero_B2B" sortOrder="60" resource="Zeltero_B2B::b2b"/>
+        <add id="Zeltero_B2B::company" title="Companies" module="Zeltero_B2B" sortOrder="10" 
+             action="zeltero_b2b/company/index" resource="Zeltero_B2B::company" parent="Zeltero_B2B::b2b"/>
+        <add id="Zeltero_B2B::quick_order" title="Quick Orders" module="Zeltero_B2B" sortOrder="20" 
+             action="zeltero_b2b/quickorder/index" resource="Zeltero_B2B::quick_order" parent="Zeltero_B2B::b2b"/>
+        <add id="Zeltero_B2B::rfq" title="Requests for Quote" module="Zeltero_B2B" sortOrder="30" 
+             action="zeltero_b2b/rfq/index" resource="Zeltero_B2B::rfq" parent="Zeltero_B2B::b2b"/>
+    </menu>
+</config>

@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Company Grid UI Component
+ */
+-->
+<listing xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <argument name="data" xsi:type="array">
+        <item name="js_config" xsi:type="array">
+            <item name="provider" xsi:type="string">zeltero_b2b_company_listing.zeltero_b2b_company_listing_data_source</item>
+        </item>
+    </argument>
+    <settings>
+        <spinner>zeltero_b2b_company_columns</spinner>
+        <deps>
+            <dep>zeltero_b2b_company_listing.zeltero_b2b_company_listing_data_source</dep>
+        </deps>
+    </settings>
+    
+    <dataSource name="zeltero_b2b_company_listing_data_source" component="Magento_Ui/js/grid/provider">
+        <settings>
+            <storageConfig>
+                <param name="indexField" xsi:type="string">company_id</param>
+            </storageConfig>
+            <updateUrl path="mui/index/render"/>
+        </settings>
+        <aclResource>Zeltero_B2B::company</aclResource>
+        <dataProvider class="Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider" name="zeltero_b2b_company_listing_data_source">
+            <settings>
+                <requestFieldName>id</requestFieldName>
+                <primaryFieldName>company_id</primaryFieldName>
+            </settings>
+        </dataProvider>
+    </dataSource>
+    
+    <listingToolbar name="listing_top">
+        <settings>
+            <sticky>true</sticky>
+        </settings>
+        <bookmark name="bookmarks"/>
+        <columnsControls name="columns_controls"/>
+        <filterSearch name="fulltext"/>
+        <filters name="listing_filters">
+            <filterSelect name="status" provider="${ $.parentName }">
+                <settings>
+                    <options class="Zeltero\B2B\Model\Config\Source\CompanyStatus"/>
+                    <caption translate="true">Select Status</caption>
+                    <label translate="true">Status</label>
+                    <dataScope>status</dataScope>
+                </settings>
+            </filterSelect>
+        </filters>
+        <paging name="listing_paging"/>
+    </listingToolbar>
+    
+    <columns name="zeltero_b2b_company_columns">
+        <selectionsColumn name="ids">
+            <settings>
+                <indexField>company_id</indexField>
+            </settings>
+        </selectionsColumn>
+        
+        <column name="company_id">
+            <settings>
+                <filter>textRange</filter>
+                <label translate="true">ID</label>
+                <sorting>asc</sorting>
+            </settings>
+        </column>
+        
+        <column name="company_name">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Company Name</label>
+            </settings>
+        </column>
+        
+        <column name="email">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Email</label>
+            </settings>
+        </column>
+        
+        <column name="tax_id">
+            <settings>
+                <filter>text</filter>
+                <label translate="true">Tax/VAT ID</label>
+            </settings>
+        </column>
+        
+        <column name="status" component="Magento_Ui/js/grid/columns/select">
+            <settings>
+                <options class="Zeltero\B2B\Model\Config\Source\CompanyStatus"/>
+                <filter>select</filter>
+                <dataType>select</dataType>
+                <label translate="true">Status</label>
+            </settings>
+        </column>
+        
+        <column name="created_at" class="Magento\Ui\Component\Listing\Columns\Date" component="Magento_Ui/js/grid/columns/date">
+            <settings>
+                <filter>dateRange</filter>
+                <dataType>date</dataType>
+                <label translate="true">Created</label>
+            </settings>
+        </column>
+        
+        <actionsColumn name="actions" class="Zeltero\B2B\Ui\Component\Listing\Column\CompanyActions">
+            <settings>
+                <indexField>company_id</indexField>
+                <label translate="true">Actions</label>
+            </settings>
+        </actionsColumn>
+    </columns>
+</listing>
